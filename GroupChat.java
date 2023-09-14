@@ -5,11 +5,21 @@ import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.util.Scanner;
 
+/**
+ * Main class that controls the group chat application.
+ */
 public class GroupChat {
     private static final String TERMINATE = "Exit";
     static String name;
     static volatile boolean finished = false;
 
+    /**
+     * Joins the multicast group specified host IP and port number, and starts a new
+     * ReadThread in a seperate thread to continuously receive messages from the
+     * multicast group.
+     * 
+     * @param args The multicast host IP and the port number specified by the user.
+     */
     public static void main(String[] args) {
         if (args.length != 2)
             System.out.println("Two arguments required: <multicast-host> <port-number>");
@@ -23,7 +33,7 @@ public class GroupChat {
                 name = sc.nextLine();
 
                 MulticastSocket socket = new MulticastSocket(port);
-                socket.setTimeToLive(0);
+                socket.setTimeToLive(0); // TTL set to 0 for local subnet communication
                 socket.joinGroup(group);
 
                 Thread t = new Thread(new ReadThread(socket, group, port));

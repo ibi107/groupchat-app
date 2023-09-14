@@ -3,6 +3,10 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
+/**
+ * The class responsible for continuously reading incoming messages from the
+ * multicast group.
+ */
 public class ReadThread implements Runnable {
     private MulticastSocket socket;
     private InetAddress group;
@@ -15,6 +19,10 @@ public class ReadThread implements Runnable {
         this.port = port;
     }
 
+    /**
+     * Runs until finished - recieves datagrams in buffer and converts them into a
+     * string.
+     */
     @Override
     public void run() {
         while (!GroupChat.finished) {
